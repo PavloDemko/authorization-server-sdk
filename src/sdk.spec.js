@@ -161,34 +161,34 @@ describe('sdk', () => {
 
     it('should sign up', function * () {
         const user = {
-            username: 'john.doe',
+            uid: 'fkwf43DAzf',
+            email: 'john.doe@gmail.com',
             password: '123456',
         };
 
         nock(testUrl)
             .post(`/${apiVersion}/sign_up`, {
-                username: user.username,
+                email: user.email,
                 password: user.password,
                 client_id: clientId,
+                user_metadata: {},
             })
-            .reply(200, {});
+            .reply(200, { uid: user.uid });
 
         const resp = yield sdk.signUp(user);
 
-        expect(resp).to.eql({
-            username: user.username,
-        });
+        expect(resp).to.eql({ uid: user.uid });
     });
 
     it('should change password', function * () {
         const user = {
-            username: 'john.doe',
+            email: 'john.doe@gmail.com',
             password: '123456',
         };
 
         nock(testUrl)
             .post(`/${apiVersion}/change_password`, {
-                username: user.username,
+                email: user.email,
                 password: user.password,
                 client_id: clientId,
             })
@@ -196,9 +196,7 @@ describe('sdk', () => {
 
         const resp = yield sdk.changePassword(user);
 
-        expect(resp).to.eql({
-            username: user.username,
-        });
+        expect(resp).to.eql({});
     });
 
     it('should get info', function * () {

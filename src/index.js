@@ -146,7 +146,7 @@ class AuthorizationSeverSDK {
         });
     }
 
-    signUp({ username, password }) {
+    signUp({ email, password, userMetadata = {} }) {
         const { clientId } = this;
 
         return request({
@@ -154,18 +154,19 @@ class AuthorizationSeverSDK {
             url: `${this.url}/${apiVersion}/sign_up`,
             headers: httpHeaders,
             json: {
-                username,
+                email,
                 password,
                 client_id: clientId,
+                user_metadata: userMetadata,
             },
-        }).then(() => {
+        }).then(data => {
             return {
-                username,
+                uid: data.uid,
             };
         });
     }
 
-    changePassword({ username, password }) {
+    changePassword({ email, password }) {
         const { clientId } = this;
 
         return request({
@@ -173,14 +174,12 @@ class AuthorizationSeverSDK {
             url: `${this.url}/${apiVersion}/change_password`,
             headers: httpHeaders,
             json: {
-                username,
+                email,
                 password,
                 client_id: clientId,
             },
         }).then(() => {
-            return {
-                username,
-            };
+            return {};
         });
     }
 
@@ -190,10 +189,6 @@ class AuthorizationSeverSDK {
             url: `${this.url}/${apiVersion}/user_info?access_token=${accessToken}`,
             headers: httpHeaders,
             json: {},
-        }).then(data => {
-            return {
-                username: data.username,
-            };
         });
     }
 
