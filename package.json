@@ -1,0 +1,58 @@
+{
+  "name": "authorization-server-sdk",
+  "version": "0.0.1",
+  "description": "Authorization Server SDK",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "cross-env NODE_ENV=development node src/server.js",
+    "test": "NODE_ENV=development mocha --require co-mocha --ui bdd 'src/**/*.spec.js'",
+    "coverage": "nyc npm run test",
+    "commit": "git cz",
+    "lint": "eslint src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oleksijfomin/authorization-server-sdk.git"
+  },
+  "keywords": [
+    "authorization",
+    "server",
+    "oauth",
+    "sdk"
+  ],
+  "pre-push": [
+    "lint",
+    "test",
+    "coverage"
+  ],
+  "author": "oleksijfomin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oleksijfomin/authorization-server-sdk/issues"
+  },
+  "homepage": "https://github.com/oleksijfomin/authorization-server-sdk#readme",
+  "dependencies": {
+    "levee": "^1.3.0",
+    "request": "^2.83.0",
+    "eslint-config-udosoft": "github:oleksijfomin/eslint-config-udosoft#0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "co-mocha": "^1.2.1",
+    "commitizen": "^2.9.6",
+    "cross-env": "^5.1.0",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint-config-udosoft": "github:oleksijfomin/eslint-config-udosoft#0.1",
+    "eslit": "^5.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1",
+    "mocha-junit-reporter": "^1.15.0",
+    "nock": "^9.0.24",
+    "nyc": "^11.2.1",
+    "pre-push": "^0.1.1",
+    "sinon": "^4.0.1",
+    "sinon-chai": "^2.14.0",
+    "slack-shippable": "^1.1.1"
+  }
+}
