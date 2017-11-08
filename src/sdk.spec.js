@@ -9,7 +9,7 @@ const clientId = 'ggg';
 const clientSecret = 'kkk';
 const audience = 'http://gghf.net';
 
-const apiVersion = 'v0.1';
+const apiVersion = 'v1';
 
 const sdk = new AuthServerSDK({
     url: testUrl,

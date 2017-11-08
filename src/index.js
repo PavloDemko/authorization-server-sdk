@@ -1,7 +1,7 @@
 const request = require('./request');
 const qs = require('querystring');
 
-const apiVersion = 'v0.1';
+const apiVersion = 'v1';
 const httpHeaders = {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
