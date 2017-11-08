@@ -1,6 +1,6 @@
 {
   "name": "authorization-server-sdk",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Authorization Server SDK",
   "main": "src/index.js",
   "scripts": {
