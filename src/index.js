@@ -49,12 +49,11 @@ class AuthorizationSeverSDK {
         const {
             username,
             password,
-            scope = '',
+            scope,
         } = options;
         const {
             clientId,
             clientSecret,
-            audience,
         } = this;
 
         return request({
@@ -65,7 +64,37 @@ class AuthorizationSeverSDK {
                 grant_type: 'password',
                 username,
                 password,
-                audience,
+                scope,
+                client_id: clientId,
+                client_secret: clientSecret,
+            },
+        }).then(data => {
+            return {
+                accessToken: data.access_token,
+                tokenType: data.token_type,
+                expiresIn: data.expires_in,
+                refreshToken: data.refresh_token,
+            };
+        });
+    }
+
+    authenticate(options) {
+        const {
+            accessToken,
+            scope,
+        } = options;
+        const {
+            clientId,
+            clientSecret,
+        } = this;
+
+        return request({
+            method: 'POST',
+            url: `${this.url}/${apiVersion}/oauth/access_token`,
+            headers: httpHeaders,
+            json: {
+                grant_type: 'access_token',
+                access_token: accessToken,
                 scope,
                 client_id: clientId,
                 client_secret: clientSecret,

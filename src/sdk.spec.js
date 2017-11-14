@@ -67,6 +67,7 @@ describe('sdk', () => {
         const user = {
             username: 'john.doe',
             password: '123456',
+            scope: ['full_access'],
         };
 
         nock(testUrl)
@@ -74,14 +75,45 @@ describe('sdk', () => {
                 grant_type: 'password',
                 username: user.username,
                 password: user.password,
-                audience,
-                scope: '',
+                scope: user.scope,
                 client_id: clientId,
                 client_secret: clientSecret,
             })
             .reply(200, tokenInfo);
 
         const resp = yield sdk.getToken(user);
+
+        expect(resp).to.eql({
+            accessToken: tokenInfo.access_token,
+            tokenType: tokenInfo.token_type,
+            expiresIn: tokenInfo.expires_in,
+            refreshToken: tokenInfo.refresh_token,
+        });
+    });
+
+    it('should authenticate', function * () {
+        const tokenInfo = {
+            access_token: 'dfdsf',
+            token_type: 'Bearer',
+            expires_in: 86400,
+            refresh_token: 'fmwef349dsf',
+        };
+        const user = {
+            accessToken: 'john.doe',
+            scope: ['full_access'],
+        };
+
+        nock(testUrl)
+            .post(`/${apiVersion}/oauth/access_token`, {
+                grant_type: 'access_token',
+                access_token: user.accessToken,
+                scope: user.scope,
+                client_id: clientId,
+                client_secret: clientSecret,
+            })
+            .reply(200, tokenInfo);
+
+        const resp = yield sdk.authenticate(user);
 
         expect(resp).to.eql({
             accessToken: tokenInfo.access_token,
