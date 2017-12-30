@@ -175,6 +175,96 @@ class AuthorizationSeverSDK {
         });
     }
 
+    authorizeFacebook(options) {
+        const { scope } = options;
+        const { clientId } = this;
+
+        return async function(req, res, next) {
+            const queryParams = qs.stringify({ client_id: clientId });
+            const url = `${this.url}/${apiVersion}/oauth/facebook?${queryParams}`;
+            const xOauthScopes = scope.join();
+
+            res.setHeader('X-OAuth-Scopes', xOauthScopes);
+            res.redirect(url);
+        };
+    }
+
+    callbackFacebook(options) {
+        return async function(req, res, next) {
+            const { query } = req;
+
+            if (query.failure_message) {
+                req.authInfo = {
+                    failureMessage: query.failure_message,
+                };
+
+                return next();
+            }
+
+            req.authInfo = {
+                userId: query.user_id,
+                firstName: query.first_name,
+                lastName: query.last_name,
+                email: query.email,
+                phoneNumber: query.phone_number,
+                country: query.country,
+                tokenInfo: {
+                    tokenType: query.tokenInfo.token_type,
+                    accessToken: query.tokenInfo.access_token,
+                    refreshToken: query.tokenInfo.refresh_token,
+                    expiresIn: query.tokenInfo.expires_in,
+                },
+            };
+
+            next();
+        };
+    }
+
+    authorizeLinkedIn(options) {
+        const { scope } = options;
+        const { clientId } = this;
+
+        return async function(req, res, next) {
+            const queryParams = qs.stringify({ client_id: clientId });
+            const url = `${this.url}/${apiVersion}/oauth/linkedin?${queryParams}`;
+            const xOauthScopes = scope.join();
+
+            res.setHeader('X-OAuth-Scopes', xOauthScopes);
+            res.redirect(url);
+        };
+    }
+
+    callbackLinkedIn(options) {
+        return async function(req, res, next) {
+            const { query } = req;
+
+            if (query.failure_message) {
+                req.authInfo = {
+                    failureMessage: query.failure_message,
+                };
+
+                return next();
+            }
+
+            req.authInfo = {
+                userId: query.user_id,
+                firstName: query.first_name,
+                lastName: query.last_name,
+                email: query.email,
+                phoneNumber: query.phone_number,
+                country: query.country,
+                tokenInfo: {
+                    tokenType: query.tokenInfo.token_type,
+                    accessToken: query.tokenInfo.access_token,
+                    refreshToken: query.tokenInfo.refresh_token,
+                    expiresIn: query.tokenInfo.expires_in,
+                },
+            };
+
+            next();
+        };
+    }
+
     signUp({ email, password, userMetadata = {} }) {
         const { clientId } = this;
 
