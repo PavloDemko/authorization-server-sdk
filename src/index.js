@@ -177,11 +177,11 @@ class AuthorizationSeverSDK {
 
     authorizeFacebook(options) {
         const { scope } = options;
-        const { clientId } = this;
+        const { url: baseUrl, clientId } = this;
 
         return async function(req, res, next) {
             const queryParams = qs.stringify({ client_id: clientId });
-            const url = `${this.url}/${apiVersion}/oauth/facebook?${queryParams}`;
+            const url = `${baseUrl}/${apiVersion}/oauth/facebook?${queryParams}`;
             const xOauthScopes = scope.join();
 
             res.setHeader('X-OAuth-Scopes', xOauthScopes);
@@ -222,11 +222,11 @@ class AuthorizationSeverSDK {
 
     authorizeLinkedIn(options) {
         const { scope } = options;
-        const { clientId } = this;
+        const { url: baseUrl, clientId } = this;
 
         return async function(req, res, next) {
             const queryParams = qs.stringify({ client_id: clientId });
-            const url = `${this.url}/${apiVersion}/oauth/linkedin?${queryParams}`;
+            const url = `${baseUrl}/${apiVersion}/oauth/linkedin?${queryParams}`;
             const xOauthScopes = scope.join();
 
             res.setHeader('X-OAuth-Scopes', xOauthScopes);
