@@ -180,11 +180,13 @@ class AuthorizationSeverSDK {
         const { url: baseUrl, clientId } = this;
 
         return async function(req, res, next) {
-            const queryParams = qs.stringify({ client_id: clientId });
-            const url = `${baseUrl}/${apiVersion}/oauth/facebook?${queryParams}`;
             const xOauthScopes = scope.join();
+            const queryParams = qs.stringify({
+                client_id: clientId,
+                'X-OAuth-Scopes': xOauthScopes,
+            });
+            const url = `${baseUrl}/${apiVersion}/oauth/facebook?${queryParams}`;
 
-            res.setHeader('X-OAuth-Scopes', xOauthScopes);
             res.redirect(url);
         };
     }
@@ -225,11 +227,13 @@ class AuthorizationSeverSDK {
         const { url: baseUrl, clientId } = this;
 
         return async function(req, res, next) {
-            const queryParams = qs.stringify({ client_id: clientId });
-            const url = `${baseUrl}/${apiVersion}/oauth/linkedin?${queryParams}`;
             const xOauthScopes = scope.join();
+            const queryParams = qs.stringify({
+                client_id: clientId,
+                'X-OAuth-Scopes': xOauthScopes,
+            });
+            const url = `${baseUrl}/${apiVersion}/oauth/linkedin?${queryParams}`;
 
-            res.setHeader('X-OAuth-Scopes', xOauthScopes);
             res.redirect(url);
         };
     }
