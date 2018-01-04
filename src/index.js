@@ -180,10 +180,9 @@ class AuthorizationSeverSDK {
         const { url: baseUrl, clientId } = this;
 
         return async function(req, res, next) {
-            const xOauthScopes = scope.join();
             const queryParams = qs.stringify({
                 client_id: clientId,
-                'X-OAuth-Scopes': xOauthScopes,
+                scope: scope.join(),
             });
             const url = `${baseUrl}/${apiVersion}/oauth/facebook?${queryParams}`;
 
@@ -211,10 +210,10 @@ class AuthorizationSeverSDK {
                 phoneNumber: query.phone_number,
                 country: query.country,
                 tokenInfo: {
-                    tokenType: query.tokenInfo.token_type,
-                    accessToken: query.tokenInfo.access_token,
-                    refreshToken: query.tokenInfo.refresh_token,
-                    expiresIn: query.tokenInfo.expires_in,
+                    tokenType: query.token_info.token_type,
+                    accessToken: query.token_info.access_token,
+                    refreshToken: query.token_info.refresh_token,
+                    expiresIn: query.token_info.expires_in,
                 },
             };
 
@@ -227,10 +226,9 @@ class AuthorizationSeverSDK {
         const { url: baseUrl, clientId } = this;
 
         return async function(req, res, next) {
-            const xOauthScopes = scope.join();
             const queryParams = qs.stringify({
                 client_id: clientId,
-                'X-OAuth-Scopes': xOauthScopes,
+                scope: scope.join(),
             });
             const url = `${baseUrl}/${apiVersion}/oauth/linkedin?${queryParams}`;
 
@@ -258,10 +256,10 @@ class AuthorizationSeverSDK {
                 phoneNumber: query.phone_number,
                 country: query.country,
                 tokenInfo: {
-                    tokenType: query.tokenInfo.token_type,
-                    accessToken: query.tokenInfo.access_token,
-                    refreshToken: query.tokenInfo.refresh_token,
-                    expiresIn: query.tokenInfo.expires_in,
+                    tokenType: query.token_info.token_type,
+                    accessToken: query.token_info.access_token,
+                    refreshToken: query.token_info.refresh_token,
+                    expiresIn: query.token_info.expires_in,
                 },
             };
 
