@@ -213,7 +213,7 @@ class AuthorizationSeverSDK {
                     tokenType: query.token_info.token_type,
                     accessToken: query.token_info.access_token,
                     refreshToken: query.token_info.refresh_token,
-                    expiresIn: query.token_info.expires_in,
+                    expiresIn: parseInt(query.token_info.expires_in, 10),
                 },
             };
 
@@ -259,7 +259,7 @@ class AuthorizationSeverSDK {
                     tokenType: query.token_info.token_type,
                     accessToken: query.token_info.access_token,
                     refreshToken: query.token_info.refresh_token,
-                    expiresIn: query.token_info.expires_in,
+                    expiresIn: parseInt(query.token_info.expires_in, 10),
                 },
             };
 
