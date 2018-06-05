@@ -267,6 +267,51 @@ class AuthorizationSeverSDK {
         };
     }
 
+    authorizeGoogle(options) {
+        const { scope } = options;
+        const { url: baseUrl, clientId } = this;
+
+        return async function(req, res, next) {
+            const queryParams = qs.stringify({
+                client_id: clientId,
+                scope: scope.join(),
+            });
+            const url = `${baseUrl}/${apiVersion}/oauth/google?${queryParams}`;
+
+            res.redirect(url);
+        };
+    }
+
+    callbackGoogle(options) {
+        return async function(req, res, next) {
+            const { query } = req;
+
+            if (query.failure_message) {
+                req.authInfo = {
+                    failureMessage: query.failure_message,
+                };
+
+                return next();
+            }
+
+            req.authInfo = {
+                userId: query.user_id,
+                firstName: query.first_name,
+                lastName: query.last_name,
+                email: query.email,
+                phoneNumber: query.phone_number,
+                tokenInfo: {
+                    tokenType: query.token_info.token_type,
+                    accessToken: query.token_info.access_token,
+                    refreshToken: query.token_info.refresh_token,
+                    expiresIn: parseInt(query.token_info.expires_in, 10),
+                },
+            };
+
+            next();
+        };
+    }
+
     signUp({ email, password, userMetadata = {} }) {
         const { clientId } = this;
 
